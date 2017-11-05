@@ -33,3 +33,11 @@ lib/cudd-*
 # Doxygen generated stuff
 src/html/*
 src/latex/*
+
+# Benchmark Generator Output Files
+examples/benchmark_generators/*.slugsin
+examples/benchmark_generators/*.structuredslugs
+
+# Eclipse Files
+.project
+.pydevproject

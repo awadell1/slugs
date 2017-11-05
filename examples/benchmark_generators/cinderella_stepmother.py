@@ -36,8 +36,9 @@ configurations = [
 # ==================================
 if __name__ != "__main__":
     raise Exception("This script is not to be used as a module!")
-startingDir = os.path.dirname(sys.argv[0])
+startingDir = os.getcwd();
 
+print('startingDir: ' + os.path.dirname(sys.argv[0]) + '\n')
 # ==================================
 # Declare executables
 # ==================================
