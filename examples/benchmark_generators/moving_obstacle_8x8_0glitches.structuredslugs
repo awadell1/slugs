@@ -1,0 +1,37 @@
+[INPUT]
+obsx: 0...6
+obsy: 0...6
+robx: 0...7
+roby: 0...7
+glitches: 0...0
+
+[OUTPUT]
+movx: 0...2
+movy: 0...2
+obsmove
+
+[SYS_INIT]
+! obsmove
+
+
+[SYS_TRANS]
+(robx < obsx) | (robx >= obsx+2) | (roby < obsy) | (roby >= obsy+2)
+(obsmove' -> ( (obsx=obsx') & (obsy=obsy') ) ) 
+((! obsmove') -> ! ( (obsx=obsx') & (obsy=obsy') ) )
+
+
+[ENV_INIT]
+robx = 0
+roby = 0
+obsx = 6
+obsy = 6
+glitches = 0
+
+[ENV_TRANS]
+(obsx' <= obsx+1) & (obsy' <= obsy+1) & (obsx <= obsx'+1) & (obsy <= obsy'+1) & (robx' <= robx+1) & (roby' <= roby+1) & (robx <= robx'+1) & (roby <= roby'+1) 
+
+(robx=0 & robx'=0 & movx<=1 | robx'+1 <= robx+movx) & (robx=7 & robx'=7 & movx >= 1 | robx'+1 >= robx+movx) & (roby=0 & roby'=0 & movy <= 1 | roby'+1 <= roby+movy) & (roby=7 & roby'=7 & movy>=1 | roby'+1 >= roby+movy) 
+
+glitches' >= glitches
+(obsmove | (obsx=obsx')) & (obsmove | (obsy=obsy')) | (glitches' >= glitches+1)
+

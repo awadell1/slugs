@@ -1,0 +1,86 @@
+[INPUT]
+movingcounter:0...0
+p0_0
+p0_1
+p0_2
+p1_0
+p1_1
+p1_2
+p2_0
+p2_1
+p2_2
+p3_0
+p3_1
+p3_2
+p4_0
+p4_1
+p4_2
+errorCount:0...0
+
+[OUTPUT]
+arm1:0...4
+arm2:0...4
+arm1op:0...2
+arm2op:0...2
+
+[ENV_TRANS]
+movingcounter'=0 -> ((p0_0' | p0_1' | p0_2') | errorCount' > errorCount)
+errorCount' >= errorCount
+
+
+movingcounter'!=0 -> (p0_0' <-> p0_0 & (movingcounter'!=0) | arm1=0 & arm1op=0 | arm2=0 & arm2op=0)
+movingcounter'!=0 -> (p0_1' <-> p0_1 & (movingcounter'!=0) | arm1=0 & arm1op=1 | arm2=0 & arm2op=1)
+movingcounter'!=0 -> (p0_2' <-> p0_2 & (movingcounter'!=0) | arm1=0 & arm1op=2 | arm2=0 & arm2op=2)
+
+p1_0' <-> (p1_0 & (movingcounter'!=0) | arm1=1 & arm1op=0 | arm2=1 & arm2op=0 | (p0_0 & movingcounter'=0))
+p1_1' <-> (p1_1 & (movingcounter'!=0) | arm1=1 & arm1op=1 | arm2=1 & arm2op=1 | (p0_1 & movingcounter'=0))
+p1_2' <-> (p1_2 & (movingcounter'!=0) | arm1=1 & arm1op=2 | arm2=1 & arm2op=2 | (p0_2 & movingcounter'=0))
+p2_0' <-> (p2_0 & (movingcounter'!=0) | arm1=2 & arm1op=0 | arm2=2 & arm2op=0 | (p1_0 & movingcounter'=0))
+p2_1' <-> (p2_1 & (movingcounter'!=0) | arm1=2 & arm1op=1 | arm2=2 & arm2op=1 | (p1_1 & movingcounter'=0))
+p2_2' <-> (p2_2 & (movingcounter'!=0) | arm1=2 & arm1op=2 | arm2=2 & arm2op=2 | (p1_2 & movingcounter'=0))
+p3_0' <-> (p3_0 & (movingcounter'!=0) | arm1=3 & arm1op=0 | arm2=3 & arm2op=0 | (p2_0 & movingcounter'=0))
+p3_1' <-> (p3_1 & (movingcounter'!=0) | arm1=3 & arm1op=1 | arm2=3 & arm2op=1 | (p2_1 & movingcounter'=0))
+p3_2' <-> (p3_2 & (movingcounter'!=0) | arm1=3 & arm1op=2 | arm2=3 & arm2op=2 | (p2_2 & movingcounter'=0))
+p4_0' <-> (p4_0 & (movingcounter'!=0) | arm1=4 & arm1op=0 | arm2=4 & arm2op=0 | (p3_0 & movingcounter'=0))
+p4_1' <-> (p4_1 & (movingcounter'!=0) | arm1=4 & arm1op=1 | arm2=4 & arm2op=1 | (p3_1 & movingcounter'=0))
+p4_2' <-> (p4_2 & (movingcounter'!=0) | arm1=4 & arm1op=2 | arm2=4 & arm2op=2 | (p3_2 & movingcounter'=0))
+
+# The moving counter counts module
+(movingcounter<0) -> (movingcounter' = movingcounter+1)
+(movingcounter=0) -> (movingcounter' = 0)
+
+[SYS_TRANS]
+arm1' < arm2'
+arm1' <= arm1+1
+arm1 <= arm1'+1
+arm2' <= arm2+1
+arm2 <= arm2'+1
+
+# Everything must be done one step *before* the items are moved away.
+!(!p4_0 & movingcounter'=0)
+!(!p4_1 & movingcounter'=0)
+!(!p4_2 & movingcounter'=0)
+
+[ENV_INIT]
+movingcounter = 0
+p0_0
+p0_1
+p0_2
+p1_0
+p1_1
+p1_2
+p2_0
+p2_1
+p2_2
+p3_0
+p3_1
+p3_2
+p4_0
+p4_1
+p4_2
+
+[SYS_INIT]
+arm1 = 0
+arm2 = 2
+arm1op = 0
+arm2op = 0
