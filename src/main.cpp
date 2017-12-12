@@ -174,6 +174,7 @@ OptionCombination optionCombinations[] = {
     OptionCombination("--cooperativeGR1Strategy --explicitStrategy --jsonOutput --sysInitRoboticsSemantics",XExtractExplicitStrategy<XRoboticsSemantics<XCooperativeGR1Strategy<GR1Context>>,false,true>::makeInstance),
     OptionCombination("--cooperativeGR1Strategy --explicitStrategy --jsonOutput",XExtractExplicitStrategy<XCooperativeGR1Strategy<GR1Context>,false,true>::makeInstance),
     OptionCombination("--cooperativeGR1Strategy --explicitStrategy --simpleRecovery --sysInitRoboticsSemantics",XExtractExplicitStrategy<XRoboticsSemantics<XCooperativeGR1Strategy<GR1Context>>,true,false>::makeInstance),
+    OptionCombination("--cooperativeGR1Strategy --explicitStrategy --sysInitRoboticsSemantics --twoDimensionalCost",XExtractExplicitStrategy<XRoboticsSemantics<XCooperativeGR1Strategy<XTwoDimensionalCost<GR1Context,true,false>>>,false,false>::makeInstance),
     OptionCombination("--cooperativeGR1Strategy --explicitStrategy --simpleRecovery",XExtractExplicitStrategy<XCooperativeGR1Strategy<GR1Context>,true,false>::makeInstance),
     OptionCombination("--cooperativeGR1Strategy --explicitStrategy --sysInitRoboticsSemantics",XExtractExplicitStrategy<XRoboticsSemantics<XCooperativeGR1Strategy<GR1Context>>,false,false>::makeInstance),
     OptionCombination("--cooperativeGR1Strategy --explicitStrategy",XExtractExplicitStrategy<XCooperativeGR1Strategy<GR1Context>,false,false>::makeInstance),
